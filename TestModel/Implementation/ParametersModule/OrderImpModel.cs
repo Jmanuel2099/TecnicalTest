@@ -37,21 +37,23 @@ namespace TestModel.Implementation.ParametersModule
             var db = _connection.makeConnection();
             db.Open();
             var sql = @"INSERT INTO ""Test"".""ORDER"" (""DATE"", ""USERID"")
-                        VALUES  (@Date, @UserId)
+                        VALUES (@Date, @UserId)
                         ";
-            var result = await db.ExecuteAsync(sql, new {Date = date, UserId = userId });
+            var result = await db.ExecuteAsync(sql, new { Date = date, UserId = userId });
             db.Close();
-            ItemOrderDbModel modelItemOrder = new ItemOrderDbModel();
-
+            ItemOrderDbModel itemOrderModel;
             foreach (var item in model.ItemIdList.Distinct())
             {
-                
-                modelItemOrder.IdItem = item;
-                modelItemOrder.IdOrder = RecordLastOrder();
-                modelItemOrder.Quantity = getQuantity(model.ItemIdList, item);
-
-                await RecordOrdenItem(modelItemOrder);
-                //modelItemOrder = null;
+                itemOrderModel = new ItemOrderDbModel
+                {
+                    IdOrder = getIdLastOrder(),
+                    IdItem = item,
+                    Quantity = getQuantity(model.ItemIdList, item)
+                    //IdOrder = 34,
+                    //IdItem = 2,
+                    //Quantity = 7
+                };
+                await RecordOrdenItem(itemOrderModel);
             }
             return result > 0;
         }
@@ -107,7 +109,7 @@ namespace TestModel.Implementation.ParametersModule
         /// This method looks the id that have a last order.
         /// </summary>
         /// <returns>id that have a last order </returns>
-        public int RecordLastOrder() 
+        public int getIdLastOrder() 
         {
             var db = _connection.makeConnection();
             db.Open();
