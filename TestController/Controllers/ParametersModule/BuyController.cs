@@ -6,6 +6,9 @@ using TestModel.Implementation.ParametersModule;
 
 namespace TestController.Controllers.ParametersModule
 {
+    /// <summary>
+    /// This class is controller Buy
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class BuyController : ControllerBase
@@ -17,6 +20,12 @@ namespace TestController.Controllers.ParametersModule
             _modelBuy = new BuyImpModel();
         }
 
+
+        /// <summary>
+        /// This method will insert buy record in data base
+        /// </summary>
+        /// <param name="model">Buy model to be insert</param>
+        /// <returns> Response 201 if record insert succesfull </returns>
         // POST api/<BuyController>
         [HttpPost]
         public async Task<IActionResult> PostBuy([FromBody] BuyDbModel model)

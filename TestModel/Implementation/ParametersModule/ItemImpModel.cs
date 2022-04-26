@@ -31,7 +31,8 @@ namespace TestModel.TestDataBase.ParametersModule
             var db = _connetion.makeConnection();
             db.Open();
             var sql = @"SELECT ""Id"", ""NAME"", ""DESCRIPTION"", ""IMAGE"", ""REMOVED"" 
-                        FROM ""Test"".""ITEM""  
+                        FROM ""Test"".""ITEM"" WHERE ""REMOVED"" = '0' 
+                        ORDER BY ""Id""
                         ";
             return await db.QueryAsync<itemDbModel>(sql, new { });
         }
@@ -51,5 +52,20 @@ namespace TestModel.TestDataBase.ParametersModule
             db.Close();
             return await db.QueryFirstOrDefaultAsync<itemDbModel>(sql, new { Id = id });
         }
+
+        public async Task<itemDbModel> RecordItemByName(String itemName)
+        {
+            var db = _connetion.makeConnection();
+            db.Open();
+            var sql = @"
+                        SELECT * 
+                        FROM ""Test"".""ITEM"" WHERE ""NAME"" = @ItemName";
+            db.Close();
+
+            return await db.QueryFirstOrDefaultAsync<itemDbModel>(sql, new { ItemName = itemName });
+
+        }
+
+
     }
 }

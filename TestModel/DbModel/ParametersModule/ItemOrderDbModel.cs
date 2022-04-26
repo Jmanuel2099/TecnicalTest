@@ -19,32 +19,5 @@ namespace TestModel.DbModel.ParametersModule
         public int IdItem { get => idItem; set => idItem = value; }
         public int Quantity { get => quantity; set => quantity = value; }
 
-
-
-
-
-        //private int idOrder;
-
-        //public int IdOrder
-        //{
-        //    get { return idOrder; }
-        //    set { idOrder = value; }
-        //}
-
-        //private int idItem;
-
-        //public int IdItem
-        //{
-        //    get { return idOrder; }
-        //    set { idOrder = value; }
-        //}
-
-        //private int quantity;
-
-        //public int Quantity
-        //{
-        //    get { return idOrder; }
-        //    set { idOrder = value; }
-        //}
     }
 }

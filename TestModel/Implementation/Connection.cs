@@ -22,7 +22,7 @@ namespace TestModel.TestDataBase
             server = "localhost";
             dataBase = "Test";
             port = "5432";
-            password = "***********";
+            password = "20deseptiembre";
             user = "postgres";
             conectionString = "server=" + server + ";" + "port=" + port + ";" + "user id=" + user + ";password=" + password + ";database=" + dataBase + ";";
         }

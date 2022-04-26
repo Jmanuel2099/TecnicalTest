@@ -33,7 +33,7 @@ namespace TestModel.Implementation.SecurityModule
             db.Open();
             var sql = @"
                         SELECT *
-                        FROM ""Test"".""User_"" 
+                        FROM ""Test"".""User_"" WHERE ""REMOVED"" = '0'  
                         ";
             return await db.QueryAsync<UserDbModel>(sql, new { });
         }

@@ -49,9 +49,6 @@ namespace TestModel.Implementation.ParametersModule
                     IdOrder = getIdLastOrder(),
                     IdItem = item,
                     Quantity = getQuantity(model.ItemIdList, item)
-                    //IdOrder = 34,
-                    //IdItem = 2,
-                    //Quantity = 7
                 };
                 await RecordOrdenItem(itemOrderModel);
             }
@@ -84,6 +81,21 @@ namespace TestModel.Implementation.ParametersModule
             });
             db.Close();
             return result > 0;
+        }
+
+        public async Task<IEnumerable<ItemOrderByUser>> getItemsOrder(int id)
+        {
+            var db = _connection.makeConnection();
+            db.Open();
+            var sql = @"
+            SELECT ""ORDERITEM"".""IDORDER"", ""ORDERITEM"".""IDITEM"", ""NAME"",
+            ""ITEM"".""DESCRIPTION"", ""ITEM"".""IMAGE"", ""ORDERITEM"".""QUANTITTY"" as Quantity
+            FROM ""Test"".""ORDERITEM""  JOIN ""Test"".""ITEM""
+            ON ""Test"".""ORDERITEM"".""IDITEM"" = ""Test"".""ITEM"".""Id""
+            WHERE ""ORDERITEM"".""IDORDER"" IN
+            (SELECT ""Id"" FROM ""Test"".""ORDER"" WHERE ""USERID"" = @Id);
+            ";
+            return await db.QueryAsync<ItemOrderByUser>(sql, new { Id = id });
         }
 
         /// <summary>
